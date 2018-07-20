@@ -1,4 +1,4 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.activity
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import com.google.gson.Gson
+import demo.kotlin.liuyang.com.weather.R
 import demo.kotlin.liuyang.com.weather.model.Weather
 
 /**

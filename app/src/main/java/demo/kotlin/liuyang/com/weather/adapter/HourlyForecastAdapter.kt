@@ -1,10 +1,12 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import demo.kotlin.liuyang.com.weather.holder.HourlyForecastHolder
+import demo.kotlin.liuyang.com.weather.R
 import demo.kotlin.liuyang.com.weather.model.HourlyForecast
 
 

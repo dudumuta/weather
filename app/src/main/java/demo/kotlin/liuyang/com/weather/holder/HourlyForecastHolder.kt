@@ -1,9 +1,10 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.holder
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import demo.kotlin.liuyang.com.weather.R
 
 /**
  * Created by ly on 18/7/18.

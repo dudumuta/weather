@@ -1,4 +1,4 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import demo.kotlin.liuyang.com.weather.R
 import demo.kotlin.liuyang.com.weather.model.DailyForecast
 import demo.kotlin.liuyang.com.weather.model.LifeStyle
 import demo.kotlin.liuyang.com.weather.model.Now

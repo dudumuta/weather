@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name="demo.kotlin.liuyang.com.weather.MainActivity">
+        <activity android:name="demo.kotlin.liuyang.com.weather.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WeatherActivity"
+        <activity android:name=".activity.WeatherActivity"
             android:launchMode="singleTask"/>
     </application>
 

@@ -1,4 +1,4 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.activity
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,9 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import demo.kotlin.liuyang.com.weather.R
+import demo.kotlin.liuyang.com.weather.adapter.HourlyForecastAdapter
+import demo.kotlin.liuyang.com.weather.adapter.MixInfoAdapter
 import demo.kotlin.liuyang.com.weather.model.HourlyForecast
 import demo.kotlin.liuyang.com.weather.model.Weather
 import demo.kotlin.liuyang.com.weather.utils.HttpUtil

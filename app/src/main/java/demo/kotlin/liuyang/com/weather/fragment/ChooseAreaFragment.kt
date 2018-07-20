@@ -1,4 +1,4 @@
-package demo.kotlin.liuyang.com.weather
+package demo.kotlin.liuyang.com.weather.fragment
 
 import android.app.Fragment
 import android.app.ProgressDialog
@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import demo.kotlin.liuyang.com.weather.R
+import demo.kotlin.liuyang.com.weather.activity.WeatherActivity
 import demo.kotlin.liuyang.com.weather.model.City
 import demo.kotlin.liuyang.com.weather.model.Country
 import demo.kotlin.liuyang.com.weather.model.Province
@@ -99,7 +101,7 @@ class ChooseAreaFragment : Fragment() {
         override fun handleMessage(msg: Message?) {
             var activity = msg?.obj as ChooseAreaFragment
             when (msg.arg1) {
-                ChooseAreaFragment.LEVEL_PROVINCE -> {
+                LEVEL_PROVINCE -> {
                     if (activity.provinceList?.isNotEmpty() == true) {
                         activity.dataList.clear()
                         for (province in activity.provinceList!!) {
@@ -110,7 +112,7 @@ class ChooseAreaFragment : Fragment() {
                         activity.currentLevel = LEVEL_PROVINCE
                     }
                 }
-                ChooseAreaFragment.LEVEL_CITY -> {
+                LEVEL_CITY -> {
                     if (activity.cityList?.isNotEmpty() == true) {
                         activity.dataList.clear()
                         for (city in activity.cityList!!) {
