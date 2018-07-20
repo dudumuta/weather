@@ -12,10 +12,11 @@ import com.bumptech.glide.Glide
 import demo.kotlin.liuyang.com.weather.R
 import demo.kotlin.liuyang.com.weather.model.DailyForecast
 import demo.kotlin.liuyang.com.weather.model.LifeStyle
-import demo.kotlin.liuyang.com.weather.model.Now
+import demo.kotlin.liuyang.com.weather.model.SunInfo
 import demo.kotlin.liuyang.com.weather.utils.TimeUtils
 
 /**
+ * 天级预报、生活指数及日出
  * Created by ly on 18/7/19.
  */
 class MixInfoAdapter(context: Context, dataSet: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -43,14 +44,15 @@ class MixInfoAdapter(context: Context, dataSet: List<Any>) : RecyclerView.Adapte
                     Glide.with(mContext).load("https://cdn.heweather.com/cond_icon/${(mDataset?.get(position) as DailyForecast).cond_code_d}.png").into(holder.icon)
                 }
             }
-            is NowSuggestionHolder -> {
-                if (mDataset?.get(position) is Now) {
-                    holder.txt?.text = (mDataset?.get(position) as Now).wind_dir
+            is SunRiseSet -> {
+                if (mDataset?.get(position) is SunInfo) {
+                    holder.rise?.text = (mDataset?.get(position) as SunInfo).sr
+                    holder.set?.text = (mDataset?.get(position) as SunInfo).ss
                 }
             }
             is LifeStyleHolder -> {
                 if (mDataset?.get(position) is LifeStyle) {
-                    var title = when((mDataset?.get(position) as LifeStyle).type) {
+                    var title = when ((mDataset?.get(position) as LifeStyle).type) {
                         "comf" -> "舒适度指数"
                         "cw" -> "洗车指数"
                         "drsg" -> "穿衣指数"
@@ -75,8 +77,8 @@ class MixInfoAdapter(context: Context, dataSet: List<Any>) : RecyclerView.Adapte
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            DayForeast -> DayWeatherHolder(mInflater?.inflate(R.layout.day_weather_item, parent, false))
-            NowSuggest -> NowSuggestionHolder(mInflater?.inflate(R.layout.weather_item_x, parent, false))
+            DayForecast -> DayWeatherHolder(mInflater?.inflate(R.layout.day_weather_item, parent, false))
+            SunRiseSet -> SunRiseSet(mInflater?.inflate(R.layout.weather_item_x, parent, false))
             LifeStyle -> LifeStyleHolder(mInflater?.inflate(R.layout.weather_other_info, parent, false))
             else -> DayWeatherHolder(mInflater?.inflate(R.layout.day_weather_item, parent, false))
         }
@@ -84,16 +86,16 @@ class MixInfoAdapter(context: Context, dataSet: List<Any>) : RecyclerView.Adapte
 
     override fun getItemViewType(position: Int): Int {
         return when (mDataset?.get(position)) {
-            is DailyForecast -> DayForeast
-            is Now -> NowSuggest
+            is DailyForecast -> DayForecast
+            is SunInfo -> SunRiseSet
             is LifeStyle -> LifeStyle
-            else -> DayForeast
+            else -> DayForecast
         }
     }
 
     companion object {
-        val DayForeast = 0
-        val NowSuggest = 1
+        val DayForecast = 0
+        val SunRiseSet = 1
         val LifeStyle = 2
     }
 
@@ -104,8 +106,9 @@ class MixInfoAdapter(context: Context, dataSet: List<Any>) : RecyclerView.Adapte
         val max: TextView? = itemView?.findViewById(R.id.day_weather_max)
     }
 
-    inner class NowSuggestionHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        val txt: TextView? = itemView?.findViewById(R.id.weather_now_txt)
+    inner class SunRiseSet(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+        val rise: TextView? = itemView?.findViewById(R.id.sun_rise)
+        val set: TextView? = itemView?.findViewById(R.id.sun_set)
     }
 
     inner class LifeStyleHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {

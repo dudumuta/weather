@@ -90,9 +90,13 @@ class WeatherActivity : AppCompatActivity() {
                 mMixDataSet.clear()
                 var dailyForecastList = it.daily_forecast
                 requestLifeStyle(city) {
-                    dailyForecastList?.let { mMixDataSet.addAll(dailyForecastList) }
-                    it.lifestyle?.let { mMixDataSet.addAll(it) }
-                    mMixAdapter?.notifyDataSetChanged()
+                    var lifeStyle = it.lifestyle
+                    requestSunInfo(city) {
+                        dailyForecastList?.let { mMixDataSet.addAll(it) }
+                        it.sunInfo?.let { mMixDataSet.add(it[0]) }
+                        lifeStyle?.let { mMixDataSet.addAll(it) }
+                        mMixAdapter?.notifyDataSetChanged()
+                    }
                 }
 
             }
@@ -114,26 +118,6 @@ class WeatherActivity : AppCompatActivity() {
             weather_air.visibility = View.VISIBLE
             weather_air.text = airStr
             weather_pm.text = "PM2.5: " + weather.air?.pm25
-        }
-    }
-
-    private inline fun showMixInfo(weather: Weather) {
-        if (weather.daily_forecast == null || weather.daily_forecast?.size == 0) {
-            return
-        }
-
-        weather.daily_forecast?.let {
-            mMixDataSet.addAll(it)
-        }
-    }
-
-    private inline fun showLifeStyle(weather: Weather) {
-        if (weather.lifestyle == null || weather.lifestyle?.size == 0) {
-            return
-        }
-
-        weather.lifestyle?.let {
-            mMixDataSet.addAll(it)
         }
     }
 
@@ -249,6 +233,31 @@ class WeatherActivity : AppCompatActivity() {
                 }
 
                 runOnUiThread {
+                    function(weather)
+                }
+            }
+        })
+    }
+
+    private fun requestSunInfo(cityName: String?, function: (weather: Weather) -> Unit) {
+        val url = "https://free-api.heweather.com/s6/solar/sunrise-sunset?location=$cityName&key=dd72a6d6914940beaf906f9c8a3f2595"
+        HttpUtil.sendOkHttpRequest(url, object : okhttp3.Callback {
+            override fun onFailure(call: Call?, e: IOException?) {
+                runOnUiThread {
+                    Toast.makeText(this@WeatherActivity, "请求失败", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call?, response: Response?) {
+                val responseText = response?.body()?.string()
+                val weather = Utility.handleWeatherResponse(responseText)
+
+                if ("ok" != weather.status) {
+                    Toast.makeText(this@WeatherActivity, "城市名称有误", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                runOnUiThread{
                     function(weather)
                 }
             }

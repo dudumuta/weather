@@ -17,6 +17,8 @@ class Weather {
     var air: AirQuality? = null
     var daily_forecast: List<DailyForecast>? = null
     var lifestyle: List<LifeStyle>? = null
+    @SerializedName("sunrise_sunset")
+    var sunInfo: List<SunInfo>? = null
 
     inner class Update {
         @SerializedName("loc")
