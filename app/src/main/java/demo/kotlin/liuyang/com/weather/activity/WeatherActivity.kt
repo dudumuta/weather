@@ -26,6 +26,7 @@ import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
 
+
 /**
  * Created by ly on 18/7/16.
  */
@@ -37,10 +38,11 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_weather)
-//        setStatusBarWidth()
         Util.fullScreen(this)
-//        setStatusBarWidth()
+        setContentView(R.layout.activity_weather)
+        val lp = weather_space.layoutParams
+        lp.height = getStatusBarHeight(this)
+        weather_space.layoutParams = lp
         nav.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
         initHourForecast()
         initMixInfo()
@@ -68,7 +70,7 @@ class WeatherActivity : AppCompatActivity() {
         val rootView = this.window.decorView.findViewById<ViewGroup>(android.R.id.content)
         rootView.setPadding(0, Util.getStatusBarHeight(this), 0, 0)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.window.statusBarColor = this.resources.getColor(R.color.transparent)
+            this.window.statusBarColor = this.resources.getColor(R.color.colorAccent)
         } else {
             val decorView = this.window.decorView as ViewGroup
             val statusBar = View(this)
