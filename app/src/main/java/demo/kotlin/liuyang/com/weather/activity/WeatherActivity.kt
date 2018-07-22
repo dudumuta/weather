@@ -2,12 +2,14 @@ package demo.kotlin.liuyang.com.weather.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import demo.kotlin.liuyang.com.weather.R
@@ -16,6 +18,8 @@ import demo.kotlin.liuyang.com.weather.adapter.MixInfoAdapter
 import demo.kotlin.liuyang.com.weather.model.HourlyForecast
 import demo.kotlin.liuyang.com.weather.model.Weather
 import demo.kotlin.liuyang.com.weather.utils.HttpUtil
+import demo.kotlin.liuyang.com.weather.utils.Util
+import demo.kotlin.liuyang.com.weather.utils.Util.getStatusBarHeight
 import demo.kotlin.liuyang.com.weather.utils.Utility
 import kotlinx.android.synthetic.main.activity_weather.*
 import okhttp3.Call
@@ -34,7 +38,9 @@ class WeatherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
-
+//        setStatusBarWidth()
+        Util.fullScreen(this)
+//        setStatusBarWidth()
         nav.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
         initHourForecast()
         initMixInfo()
@@ -56,6 +62,21 @@ class WeatherActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         loadWeatherInfo(intent)
+    }
+
+    private fun setStatusBarWidth() {
+        val rootView = this.window.decorView.findViewById<ViewGroup>(android.R.id.content)
+        rootView.setPadding(0, Util.getStatusBarHeight(this), 0, 0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.window.statusBarColor = this.resources.getColor(R.color.transparent)
+        } else {
+            val decorView = this.window.decorView as ViewGroup
+            val statusBar = View(this)
+            val lp = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    getStatusBarHeight(this))
+            statusBar.setBackgroundColor(this.resources.getColor(R.color.transparent))
+            decorView.addView(statusBar, lp)
+        }
     }
 
     private fun loadWeatherInfo(intent: Intent?) {
@@ -257,7 +278,7 @@ class WeatherActivity : AppCompatActivity() {
                     return
                 }
 
-                runOnUiThread{
+                runOnUiThread {
                     function(weather)
                 }
             }

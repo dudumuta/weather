@@ -15,11 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/weather_space"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
